@@ -10,6 +10,8 @@ use App\Models\Device;
 use App\Services\InventoryNumberGenerator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Exports\DevicesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DeviceController extends Controller
 {
@@ -76,4 +78,15 @@ class DeviceController extends Controller
             ->route('customers.show', $customer)
             ->with('status', 'Gerät wurde gelöscht.');
     }
+public function exportAll()
+{
+    return Excel::download(new DevicesExport(Device::with('customer')->get()), 'alle-geraete.xlsx');
+}
+public function exportCustomer(Customer $customer)
+{
+    return Excel::download(
+        new DevicesExport($customer->devices),
+        'geraete-'.$customer->company.'.xlsx'
+    );
+}
 }

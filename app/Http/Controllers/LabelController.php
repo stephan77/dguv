@@ -11,22 +11,20 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LabelController extends Controller
 {
-    public function show(Device $device): Response
-    {
-        $device->load('customer');
+public function show(Device $device)
+{
+    $device->load('customer');
 
-        $qrPng = QrCode::format('png')
-            ->size(140)
-            ->margin(1)
-            ->generate(route('devices.show', $device));
+    $qrSvg = QrCode::format('svg')
+        ->size(120)
+        ->margin(0)
+        ->generate(route('devices.show', $device));
 
-        $qrBase64 = base64_encode($qrPng);
+    $pdf = Pdf::loadView('pdf.device-label', [
+        'device' => $device,
+        'qrCode' => $qrSvg,   // KEIN base64 mehr!
+    ])->setPaper([0, 0, 113.39, 198.43]);
 
-        $pdf = Pdf::loadView('pdf.device-label', [
-            'device' => $device,
-            'qrCode' => $qrBase64,
-        ])->setPaper([0, 0, 283.46, 141.73]);
-
-        return $pdf->download('etikett-' . $device->inventory_number . '.pdf');
-    }
+    return $pdf->stream('etikett.pdf');
+}
 }

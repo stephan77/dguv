@@ -41,10 +41,18 @@
     <div class="bg-white rounded-2xl shadow p-6">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-semibold">Geräte</h3>
-            <a href="{{ route('customers.devices.create', $customer) }}"
-               class="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm hover:bg-slate-800">
-                Neues Gerät
-            </a>
+
+            <div class="flex gap-2">
+                <a href="{{ route('customers.devices.create', $customer) }}"
+                   class="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm hover:bg-slate-800">
+                    Neues Gerät
+                </a>
+
+                <a href="{{ route('customers.devices.export', $customer) }}"
+                   class="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm hover:bg-slate-800">
+                    Excel Export
+                </a>
+            </div>
         </div>
 
         <table class="w-full text-sm">
