@@ -10,6 +10,7 @@ use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\LabelController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -38,6 +39,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/devices/{device}/inspections/create', [InspectionController::class, 'create'])->name('devices.inspections.create');
     Route::post('/devices/{device}/inspections', [InspectionController::class, 'store'])->name('devices.inspections.store');
     Route::delete('/inspections/{inspection}', [InspectionController::class, 'destroy'])->name('inspections.destroy');
+
+    Route::resource('users', UserController::class)->except(['show']);
+    Route::post('/users/toggle-registration', [UserController::class, 'toggleRegistration'])->name('users.toggleRegistration');
 });
 
 require __DIR__ . '/auth.php';

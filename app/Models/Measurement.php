@@ -19,10 +19,12 @@ class Measurement extends Model
         'leakage',
         'leakage_result',
         'passed',
+        'raw_data',
     ];
 
     protected $casts = [
         'passed' => 'bool',
+        'raw_data' => 'array',
     ];
 
     public function inspection(): BelongsTo

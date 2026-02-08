@@ -20,6 +20,9 @@ class RegisteredUserController extends Controller
 
     public function store(RegisterRequest $request): RedirectResponse
     {
+        if (setting('registration_enabled', '1') !== '1') {
+            abort(403);
+        }
         $user = User::create($request->validated());
 
         event(new Registered($user));

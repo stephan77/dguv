@@ -1,33 +1,67 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card">
-        <div style="display:flex; justify-content: space-between; align-items:center;">
-            <h2>Kunden</h2>
-            <a class="btn" href="{{ route('customers.create') }}">Neuer Kunde</a>
+<div class="max-w-7xl mx-auto">
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-semibold text-slate-800">Kunden</h2>
+
+            <a href="{{ route('customers.create') }}"
+               class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 transition">
+                Neuer Kunde
+            </a>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Firma</th>
-                    <th>Ansprechpartner</th>
-                    <th>Ort</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($customers as $customer)
-                    <tr>
-                        <td>{{ $customer->company }}</td>
-                        <td>{{ $customer->name }}</td>
-                        <td>{{ $customer->zip }} {{ $customer->city }}</td>
-                        <td><a class="btn btn-secondary" href="{{ route('customers.show', $customer) }}">Details</a></td>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="text-left text-slate-500 border-b">
+                        <th class="pb-3 font-medium">Firma</th>
+                        <th class="pb-3 font-medium">Ansprechpartner</th>
+                        <th class="pb-3 font-medium">Ort</th>
+                        <th class="pb-3"></th>
                     </tr>
-                @empty
-                    <tr><td colspan="4">Noch keine Kunden angelegt.</td></tr>
-                @endforelse
-            </tbody>
-        </table>
-        <div style="margin-top: 12px;">{{ $customers->links() }}</div>
+                </thead>
+
+                <tbody class="divide-y">
+                    @forelse ($customers as $customer)
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-3 font-medium text-slate-800">
+                                {{ $customer->company }}
+                            </td>
+
+                            <td class="py-3 text-slate-600">
+                                {{ $customer->name }}
+                            </td>
+
+                            <td class="py-3 text-slate-600">
+                                {{ $customer->zip }} {{ $customer->city }}
+                            </td>
+
+                            <td class="py-3 text-right">
+                                <a href="{{ route('customers.show', $customer) }}"
+                                   class="inline-flex items-center rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
+                                    Details
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="py-8 text-center text-slate-400">
+                                Noch keine Kunden angelegt.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-6">
+            {{ $customers->links() }}
+        </div>
+
     </div>
+</div>
 @endsection

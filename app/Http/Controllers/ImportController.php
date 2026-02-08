@@ -44,35 +44,71 @@ class ImportController extends Controller
 
         foreach ($rows as $index => $row) {
             $deviceId = $request->input("device_ids.$index");
+
             if (!$deviceId) {
                 continue;
             }
 
-            $device = Device::query()->where('customer_id', $customer->id)->findOrFail($deviceId);
+            $device = Device::query()
+                ->where('customer_id', $customer->id)
+                ->findOrFail($deviceId);
+
+            $inspectionDate = $row['inspection_date'] ?? now()->toDateString();
 
             $inspection = Inspection::create([
                 'device_id' => $device->id,
-                'inspection_date' => $row['inspection_date'] ?? now()->toDateString(),
-                'inspector' => $row['inspector'] ?? 'Import',
+                'inspection_date' => $inspectionDate,
+                'inspector' => auth()->user()->name . ' (' . auth()->user()->title . ')',
                 'standard' => 'DGUV V3',
                 'passed' => $this->isPassed($row['result'] ?? null),
                 'notes' => 'Import ST725',
             ]);
 
-            Measurement::create([
-                'inspection_id' => $inspection->id,
-                'test_type' => 'ST725 Import',
-                'rpe' => $row['rpe'],
-                'rpe_result' => $row['rpe_result'],
-                'riso' => $row['riso'],
-                'riso_result' => $row['riso_result'],
-                'leakage' => $row['leakage'],
-                'leakage_result' => $row['leakage_result'],
-                'passed' => $this->isPassed($row['result'] ?? null),
-            ]);
+Measurement::create([
+    'inspection_id' => $inspection->id,
+    'test_type' => 'ST725 Import',
+
+    'rpe' => $row['rpe'] ?? null,
+    'rpe_result' => $row['rpe_result'] ?? null,
+
+    'riso' => $row['riso'] ?? null,
+    'riso_result' => $row['riso_result'] ?? null,
+
+    'leakage' => $row['iea'] ?? null,
+    'leakage_result' => $row['iea_result'] ?? null,
+
+    'passed' => $this->isPassed($row['result'] ?? null),
+
+    'raw_data' => [
+        'storage_number' => $row['storage_number'] ?? null,
+        'description' => $row['description'] ?? null,
+        'inspection_date' => $row['inspection_date'] ?? null,
+        'result' => $row['result'] ?? null,
+
+        'rpe' => $row['rpe'] ?? null,
+        'rpe_unit' => $row['rpe_unit'] ?? 'Ohm',
+        'rpe_result' => $row['rpe_result'] ?? null,
+
+        'riso' => $row['riso'] ?? null,
+        'riso_unit' => $row['riso_unit'] ?? 'MΩ',
+        'riso_result' => $row['riso_result'] ?? null,
+
+        'iea' => $row['iea'] ?? null,
+        'iea_unit' => $row['iea_unit'] ?? 'mA',
+        'iea_result' => $row['iea_result'] ?? null,
+
+        // AUTO-FÜLLEN WENN CSV KEINE ANGABE HAT
+        'visual_result' => $row['visual_result']
+            ?? ($this->isPassed($row['result'] ?? null) ? 'bestanden' : 'nicht bestanden'),
+
+        'function_result' => $row['function_result']
+            ?? ($this->isPassed($row['result'] ?? null) ? 'bestanden' : 'nicht bestanden'),
+    ],
+]);
 
             $device->update([
-                'next_inspection' => Carbon::parse($inspection->inspection_date)->addMonthsNoOverflow(12),
+                'next_inspection' => Carbon::parse($inspectionDate)
+                    ->addMonthsNoOverflow(12),
             ]);
         }
 
