@@ -10,6 +10,7 @@ use App\Models\Inspection;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 
 class InspectionController extends Controller
 {
@@ -40,4 +41,33 @@ class InspectionController extends Controller
             ->route('devices.show', $device)
             ->with('status', 'Prüfung wurde gelöscht.');
     }
+    public function edit(Inspection $inspection)
+    {
+        return view('inspections.edit', compact('inspection'));
+    }
+public function update(Request $request, Inspection $inspection)
+{
+    $inspection->update([
+        'inspection_date' => $request->inspection_date ?? $inspection->inspection_date,
+        'inspector' => $request->inspector ?? $inspection->inspector,
+        'notes' => $request->notes,
+    ]);
+
+    $measurement = $inspection->measurements()->first();
+
+    if ($measurement) {
+        $measurement->update([
+            'rpe' => $request->rpe,
+            'rpe_result' => $request->rpe_result,
+            'riso' => $request->riso,
+            'riso_result' => $request->riso_result,
+            'leakage' => $request->leakage,
+            'leakage_result' => $request->leakage_result,
+        ]);
+    }
+
+    return redirect()
+        ->route('devices.show', $inspection->device)
+        ->with('status', 'Prüfung aktualisiert');
+}
 }

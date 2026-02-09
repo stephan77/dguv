@@ -139,16 +139,23 @@
                                 @endforeach
                             </td>
 
-                            <td class="px-4 py-3">
-                                <form method="POST" action="{{ route('inspections.destroy', $inspection) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="px-3 py-1.5 text-xs rounded-lg bg-red-600 text-white hover:bg-red-700">
-                                        Löschen
-                                    </button>
-                                </form>
-                            </td>
+                            <td class="px-4 py-3 flex gap-2">
+
+        <a href="{{ route('inspections.edit', $inspection) }}"
+       class="px-3 py-1.5 text-xs rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+        Bearbeiten
+    </a>
+
+    <form method="POST" action="{{ route('inspections.destroy', $inspection) }}">
+        @csrf
+        @method('DELETE')
+        <button type="submit"
+            class="px-3 py-1.5 text-xs rounded-lg bg-red-600 text-white hover:bg-red-700">
+            Löschen
+        </button>
+    </form>
+
+</td>
                         </tr>
                     @empty
                         <tr>

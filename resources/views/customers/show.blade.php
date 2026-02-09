@@ -49,7 +49,7 @@
                 </a>
 
                 <a href="{{ route('customers.devices.export', $customer) }}"
-                   class="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm hover:bg-slate-800">
+                   class="px-4 py-2 bg-green-600 text-white rounded-xl text-sm hover:bg-green-700">
                     Excel Export
                 </a>
             </div>

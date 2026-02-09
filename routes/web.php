@@ -43,12 +43,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)->except(['show']);
     Route::post('/users/toggle-registration', [UserController::class, 'toggleRegistration'])->name('users.toggleRegistration');
 
-    Route::get('/devices/export', [DeviceController::class, 'export'])->name('devices.export');
+    //Route::get('/devices/export', [DeviceController::class, 'export'])->name('devices.export');
     Route::get('/devices/export', [DeviceController::class, 'exportAll'])->name('devices.export');
 
     Route::get('/customers/{customer}/export', [DeviceController::class, 'exportCustomer'])->name('customers.devices.export');
 
-    
+    Route::get('/inspections/{inspection}/edit', [InspectionController::class, 'edit'])
+    ->name('inspections.edit');
+
+    Route::put('/inspections/{inspection}', [InspectionController::class, 'update'])
+    ->name('inspections.update');
+
 });
 
 require __DIR__ . '/auth.php';
