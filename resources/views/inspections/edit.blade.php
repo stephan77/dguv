@@ -16,7 +16,34 @@
         @csrf
         @method('PUT')
 
-        {{-- ALLGEMEIN --}}
+{{-- ALLGEMEIN --}}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+    <div>
+        <label class="block mb-2 font-medium">Prüfdatum</label>
+        <input type="date"
+               name="inspection_date"
+               value="{{ optional($inspection->inspection_date)->format('Y-m-d') }}"
+               class="w-full border rounded p-2">
+    </div>
+
+    <div>
+        <label class="block mb-2 font-medium">Prüfer</label>
+        <input type="text"
+               name="inspector"
+               value="{{ $inspection->inspector }}"
+               class="w-full border rounded p-2">
+    </div>
+
+    <div class="md:col-span-2">
+        <label class="block mb-2 font-medium">Gesamtergebnis</label>
+        <select name="passed" class="w-full border rounded p-2">
+            <option value="1" @selected($inspection->passed)>Bestanden</option>
+            <option value="0" @selected(!$inspection->passed)>Nicht bestanden</option>
+        </select>
+    </div>
+
+</div>
         <div class="mb-6">
             <label class="block mb-2 font-medium">Kommentar</label>
             <textarea name="notes"
