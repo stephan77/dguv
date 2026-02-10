@@ -17,6 +17,8 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
+Route::get('/public/device/{device}', [DeviceController::class, 'public'])
+    ->name('devices.public');
 
 // Alle Routen in dieser Gruppe sind nur erreichbar, wenn ein User eingeloggt ist
 Route::middleware('auth')->group(function () {

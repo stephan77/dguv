@@ -176,4 +176,10 @@ class DeviceController extends Controller
             'geraete-'.$customer->company.'.xlsx'
         );
     }
+    public function public(Device $device): View
+    {
+        $device->load(['customer', 'inspections.measurements']);
+
+        return view('devices.public', compact('device'));
+    }
 }
