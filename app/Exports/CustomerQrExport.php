@@ -16,12 +16,12 @@ class CustomerQrExport implements FromCollection, WithHeadings
 
     public function collection()
     {
-        return $this->devices->map(function ($device) {
-            return [
-                $device->inventory_number,
-                'https://dguv.tkgs-greentech.de/devices/'.$device->id,
-            ];
-        });
+return $this->devices->map(function ($device) {
+    return [
+        $device->inventory_number,
+        route('devices.public', $device),
+    ];
+});
     }
 
     public function headings(): array
