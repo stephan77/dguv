@@ -12,6 +12,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Exports\DevicesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DeviceQrExport;
+use App\Exports\CustomerQrExport;
 
 class DeviceController extends Controller
 {
@@ -182,4 +184,18 @@ class DeviceController extends Controller
 
         return view('devices.public', compact('device'));
     }
+    public function exportQr()
+{
+    return Excel::download(
+        new DeviceQrExport(Device::all()),
+        'qr-labels.xlsx'
+    );
+}
+public function exportCustomerQr(Customer $customer)
+{
+    return Excel::download(
+        new CustomerQrExport($customer->devices),
+        'qr-'.$customer->company.'.xlsx'
+    );
+}
 }

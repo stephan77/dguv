@@ -96,7 +96,12 @@ Route::middleware('auth')->group(function () {
     // Prüfung bearbeiten
     Route::get('/inspections/{inspection}/edit', [InspectionController::class, 'edit'])
         ->name('inspections.edit');
-
+    //QR CODE Kunde
+    Route::get('/devices/export-qr', [DeviceController::class, 'exportQr'])
+    ->name('devices.export.qr');
+Route::get('/customers/{customer}/export-qr',
+    [DeviceController::class, 'exportCustomerQr']
+)->name('customers.devices.exportQr');
     // Prüfung speichern (Update)
     Route::put('/inspections/{inspection}', [InspectionController::class, 'update'])
         ->name('inspections.update');
