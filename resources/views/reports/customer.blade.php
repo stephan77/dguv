@@ -67,7 +67,7 @@
 </head>
 <body>
 
-<h1>DGUV Prüfprotokoll</h1>
+<h1>DGUV V3 Prüfprotokoll</h1>
 
 <div class="meta">
     <strong>{{ $customer->company }}</strong><br>
@@ -76,117 +76,139 @@
 </div>
 
 @foreach ($customer->devices as $device)
-    <div class="device-box">
+<div class="device-box" style="page-break-after: always;">
 
-        <h2>Gerät: {{ $device->name }} ({{ $device->inventory_number }})</h2>
+    <h2>{{ $device->name }} – {{ $device->inventory_number }}</h2>
 
-        <div class="meta">
-            Hersteller: {{ $device->manufacturer }} |
-            Modell: {{ $device->model }} |
-            Seriennummer: {{ $device->serial }}<br>
-            Standort: {{ $device->location }}<br>
-            Nächste Prüfung: {{ optional($device->next_inspection)->format('d.m.Y') }}
-        </div>
+    <table>
+        <tr>
+            <th>Hersteller</th>
+            <th>Modell</th>
+            <th>Seriennummer</th>
+            <th>Standort</th>
+        </tr>
+        <tr>
+            <td>{{ $device->manufacturer }}</td>
+            <td>{{ $device->model }}</td>
+            <td>{{ $device->serial }}</td>
+            <td>{{ $device->location }}</td>
+        </tr>
+    </table>
 
-        @foreach ($device->inspections as $inspection)
-            <h3>Prüfung vom {{ $inspection->inspection_date->format('d.m.Y') }}</h3>
+    <br>
 
-            <table>
-                <tr>
-                    <th>Prüfer</th>
-                    <th>Norm</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td>{{ $inspection->inspector }}</td>
-                    <td>{{ $inspection->standard }}</td>
-                    <td class="{{ $inspection->passed ? 'ok' : 'fail' }}">
-                        {{ $inspection->passed ? 'BESTANDEN' : 'NICHT BESTANDEN' }}
-                    </td>
-                </tr>
-            </table>
+    @php
+        $inspection = $device->inspections->first();
+    @endphp
 
-            @foreach ($inspection->measurements as $measurement)
-                @php $data = $measurement->raw_data ?? []; @endphp
+    @if($inspection)
 
-                <div class="section-title">Messwerte (ST725)</div>
-
-                <table>
-                    <tr>
-                        <th>Messart</th>
-                        <th>Wert</th>
-                        <th>Einheit</th>
-                        <th>Ergebnis</th>
-                    </tr>
-
-                    <tr>
-                        <td>Schutzleiterwiderstand (RPE)</td>
-                        <td>{{ $data['RPE Wert'] ?? '-' }}</td>
-                        <td>{{ $data['RPE Einheit'] ?? '-' }}</td>
-                        <td>{{ $data['RPE Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Ableitstrom (IPE)</td>
-                        <td>{{ $data['IPE Wert'] ?? '-' }}</td>
-                        <td>{{ $data['IPE Einheit'] ?? '-' }}</td>
-                        <td>{{ $data['IPE Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Berührungsstrom (IBer)</td>
-                        <td>{{ $data['IBer Wert'] ?? '-' }}</td>
-                        <td>{{ $data['IBer Einheit'] ?? '-' }}</td>
-                        <td>{{ $data['IBer Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Ersatzableitstrom (IEA)</td>
-                        <td>{{ $data['IEA Wert'] ?? '-' }}</td>
-                        <td>{{ $data['IEA Einheit'] ?? '-' }}</td>
-                        <td>{{ $data['IEA Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Isolationswiderstand (RISO)</td>
-                        <td>{{ $data['RISO Wert'] ?? '-' }}</td>
-                        <td>{{ $data['RISO Einheit'] ?? '-' }}</td>
-                        <td>{{ $data['RISO Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Prüfspannung RISO</td>
-                        <td>{{ $data['RISO Spannung'] ?? '-' }}</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td>Kabelprüfung</td>
-                        <td>{{ $data['Kabel Wert'] ?? '-' }}</td>
-                        <td>{{ $data['Kabel Einheit'] ?? '-' }}</td>
-                        <td>{{ $data['Kabel Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Sichtprüfung</td>
-                        <td></td>
-                        <td></td>
-                        <td>{{ $data['Sichtprüfung Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>FI/RCD Test</td>
-                        <td>{{ $data['FI/RCD Wert'] ?? '-' }}</td>
-                        <td>{{ $data['FI/RCD Einheit'] ?? '-' }}</td>
-                        <td>{{ $data['FI/RCD Ergebnis'] ?? '-' }}</td>
-                    </tr>
-
-                </table>
-            @endforeach
-        @endforeach
-
+    <!-- GROSSE AMPEL -->
+    <div style="text-align:center; font-size:22px; margin:15px 0;">
+        <strong>Status:
+        <span class="{{ $inspection->passed ? 'ok' : 'fail' }}">
+            {{ $inspection->passed ? 'BESTANDEN' : 'NICHT BESTANDEN' }}
+        </span>
+        </strong>
     </div>
+
+    <!-- PRÜFDATEN -->
+    <table>
+        <tr>
+            <th>Prüfdatum</th>
+            <th>Prüfer</th>
+            <th>Norm</th>
+            <th>Schutzklasse</th>
+        </tr>
+        <tr>
+            <td>{{ $inspection->inspection_date->format('d.m.Y') }}</td>
+            <td>{{ $inspection->inspector }}</td>
+            <td>{{ $inspection->standard }}</td>
+            <td>{{ $inspection->protection_class ?? '-' }}</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <th>Prüfgrund</th>
+            <th>Prüfintervall</th>
+            <th>Nächste Prüfung</th>
+        </tr>
+        <tr>
+            <td>{{ $inspection->test_reason ?? 'Wiederholungsprüfung' }}</td>
+            <td>{{ $inspection->interval_months ?? 12 }} Monate</td>
+            <td>{{ optional($device->next_inspection)->format('d.m.Y') }}</td>
+        </tr>
+    </table>
+
+    <!-- MESSGERÄT -->
+    <h3>Messgerät</h3>
+    <table>
+        <tr>
+            <th>Gerät</th>
+            <th>Seriennummer</th>
+            <th>Kalibriert bis</th>
+        </tr>
+        <tr>
+            <td>{{ $inspection->tester_device ?? 'ST725' }}</td>
+            <td>{{ $inspection->tester_serial ?? '-' }}</td>
+            <td>{{ optional($inspection->tester_calibrated_at)->format('d.m.Y') ?? '-' }}</td>
+        </tr>
+    </table>
+
+    <!-- MESSWERTE -->
+    @foreach ($inspection->measurements as $measurement)
+        @php $data = $measurement->raw_data ?? []; @endphp
+
+        <h3>Messwerte</h3>
+
+        <table>
+            <tr>
+                <th>Messart</th>
+                <th>Wert</th>
+                <th>Einheit</th>
+                <th>Ergebnis</th>
+            </tr>
+
+            <tr>
+                <td>Schutzleiterwiderstand</td>
+                <td>{{ $data['RPE Wert'] ?? '-' }}</td>
+                <td>{{ $data['RPE Einheit'] ?? '-' }}</td>
+                <td>{{ $data['RPE Ergebnis'] ?? '-' }}</td>
+            </tr>
+
+            <tr>
+                <td>Isolationswiderstand</td>
+                <td>{{ $data['RISO Wert'] ?? '-' }}</td>
+                <td>{{ $data['RISO Einheit'] ?? '-' }}</td>
+                <td>{{ $data['RISO Ergebnis'] ?? '-' }}</td>
+            </tr>
+
+            <tr>
+                <td>Ableitstrom</td>
+                <td>{{ $data['IPE Wert'] ?? '-' }}</td>
+                <td>{{ $data['IPE Einheit'] ?? '-' }}</td>
+                <td>{{ $data['IPE Ergebnis'] ?? '-' }}</td>
+            </tr>
+
+            <tr>
+                <td>Sichtprüfung</td>
+                <td></td>
+                <td></td>
+                <td>{{ $data['Sichtprüfung Ergebnis'] ?? '-' }}</td>
+            </tr>
+        </table>
+    @endforeach
+
+    <!-- KOMMENTAR -->
+    @if($inspection->notes)
+        <h3>Bemerkung</h3>
+        <p>{{ $inspection->notes }}</p>
+    @endif
+
+    @endif
+
+</div>
 @endforeach
 
 </body>

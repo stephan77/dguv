@@ -85,6 +85,11 @@
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">👤</span>
                         <span x-show="sidebarOpen">Benutzer</span>
                     </a>
+                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                        href="{{ route('test-devices.index') }}">
+                        <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">🧪</span>
+                        <span x-show="sidebarOpen">Prüfgeräte</span>
+                    </a>
                 </div>
             </nav>
 

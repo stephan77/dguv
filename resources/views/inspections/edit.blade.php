@@ -42,6 +42,15 @@
             <option value="0" @selected(!$inspection->passed)>Nicht bestanden</option>
         </select>
     </div>
+    <div class="md:col-span-2">
+    <label class="flex items-center gap-2">
+        <input type="checkbox"
+               name="is_welder"
+               value="1"
+               {{ $inspection->standard === 'DIN EN 60974-4' ? 'checked' : '' }}>
+        <span>Schweißgerät (DIN EN 60974-4)</span>
+    </label>
+</div>
 
 </div>
         <div class="mb-6">
@@ -106,7 +115,78 @@
             </div>
 
         </div>
+<hr class="my-6">
 
+<h3 class="font-semibold mb-4">Prüfdetails</h3>
+<div>
+    <label class="block mb-2 font-medium">Prüfgerät</label>
+    <select name="test_device_id" class="w-full border rounded p-2">
+        <option value="">–</option>
+        @foreach($testDevices as $td)
+            <option value="{{ $td->id }}"
+                @selected($inspection->test_device_id == $td->id)>
+                {{ $td->name }} – {{ $td->serial_number }}
+            </option>
+        @endforeach
+    </select>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+
+    <div>
+        <label class="block mb-2 font-medium">Prüfgrund</label>
+        <select name="test_reason" class="w-full border rounded p-2">
+            <option value="">–</option>
+            <option value="Erstprüfung" @selected($inspection->test_reason=='Erstprüfung')>Erstprüfung</option>
+            <option value="Wiederholungsprüfung" @selected($inspection->test_reason=='Wiederholungsprüfung')>Wiederholungsprüfung</option>
+            <option value="Reparaturprüfung" @selected($inspection->test_reason=='Reparaturprüfung')>Nach Reparatur</option>
+        </select>
+    </div>
+
+    <div>
+        <label class="block mb-2 font-medium">Schutzklasse</label>
+        <select name="protection_class" class="w-full border rounded p-2">
+            <option value="">–</option>
+            <option value="SK I" @selected($inspection->protection_class=='SK I')>SK I</option>
+            <option value="SK II" @selected($inspection->protection_class=='SK II')>SK II</option>
+            <option value="SK III" @selected($inspection->protection_class=='SK III')>SK III</option>
+        </select>
+    </div>
+
+    <div>
+        <label class="block mb-2 font-medium">Prüfgerät</label>
+        <input type="text"
+               name="tester_device"
+               value="{{ $inspection->tester_device }}"
+               class="w-full border rounded p-2"
+               placeholder="z.B. BENNING ST725">
+    </div>
+
+    <div>
+        <label class="block mb-2 font-medium">Seriennummer Prüfgerät</label>
+        <input type="text"
+               name="tester_serial"
+               value="{{ $inspection->tester_serial }}"
+               class="w-full border rounded p-2">
+    </div>
+
+    <div>
+        <label class="block mb-2 font-medium">Kalibriert am</label>
+        <input type="date"
+               name="tester_calibrated_at"
+               value="{{ optional($inspection->tester_calibrated_at)->format('Y-m-d') }}"
+               class="w-full border rounded p-2">
+    </div>
+
+    <div>
+        <label class="block mb-2 font-medium">Prüfintervall (Monate)</label>
+        <input type="number"
+               name="interval_months"
+               value="{{ $inspection->interval_months }}"
+               class="w-full border rounded p-2"
+               placeholder="12">
+    </div>
+
+</div>
         <button class="w-full mt-6 py-3 bg-green-600 text-white rounded-xl">
             Änderungen speichern
         </button>

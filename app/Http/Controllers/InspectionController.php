@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Models\TestDevice;
 
 class InspectionController extends Controller
 {
@@ -30,21 +31,21 @@ class InspectionController extends Controller
      * - Prüfung wird direkt mit dem Gerät verknüpft
      * - Nächste Prüfung wird automatisch auf +12 Monate gesetzt
      */
-    public function store(InspectionRequest $request, Device $device): RedirectResponse
-    {
-        // Neue Prüfung für dieses Gerät erstellen
-        $inspection = $device->inspections()->create($request->validated());
+public function store(InspectionRequest $request, Device $device): RedirectResponse
+{
+    $inspection = $device->inspections()->create($request->validated());
 
-        // Gerät bekommt automatisch ein neues nächstes Prüfdatum
-        $device->update([
-            'next_inspection' => Carbon::parse($inspection->inspection_date)
-                ->addMonthsNoOverflow(12),
-        ]);
+    $months = $inspection->interval_months ?? 12;
 
-        return redirect()
-            ->route('devices.show', $device)
-            ->with('status', 'Prüfung wurde angelegt.');
-    }
+    $device->update([
+        'next_inspection' => Carbon::parse($inspection->inspection_date)
+            ->addMonthsNoOverflow($months),
+    ]);
+
+    return redirect()
+        ->route('devices.show', $device)
+        ->with('status', 'Prüfung wurde angelegt.');
+}
 
     /**
      * Löscht eine Prüfung.
@@ -64,10 +65,14 @@ class InspectionController extends Controller
     /**
      * Öffnet den Editor für eine bestehende Prüfung.
      */
-    public function edit(Inspection $inspection)
-    {
-        return view('inspections.edit', compact('inspection'));
-    }
+
+
+public function edit(Inspection $inspection)
+{
+    $testDevices = TestDevice::all();
+
+    return view('inspections.edit', compact('inspection', 'testDevices'));
+}
 
     /**
      * Aktualisiert eine bestehende Prüfung UND deren Messwerte.
@@ -77,32 +82,50 @@ class InspectionController extends Controller
      *   wenn Werte im Formular vorhanden sind
      * - Messwerte werden aus der ersten verknüpften Measurement-Zeile geladen
      */
-    public function update(Request $request, Inspection $inspection)
-    {
-        // Prüfungsdaten aktualisieren
-$inspection->update([
-    'inspection_date' => $request->inspection_date ?? $inspection->inspection_date,
-    'inspector' => $request->inspector ?? $inspection->inspector,
+public function update(Request $request, Inspection $inspection)
+{
+    $standard = $request->has('is_welder')
+    ? 'DIN EN 60974-4'
+    : 'DIN VDE 0701-0702';
+    $inspection->update([
+    'inspection_date' => $request->inspection_date,
+    'inspector' => $request->inspector,
     'passed' => $request->passed,
     'notes' => $request->notes,
+    'standard' => $standard,
+    'test_device_id' => $request->test_device_id,
+    'test_reason' => $request->test_reason,
+    'protection_class' => $request->protection_class,
+    'tester_device' => $request->tester_device,
+    'tester_serial' => $request->tester_serial,
+    'tester_calibrated_at' => $request->tester_calibrated_at,
+    'interval_months' => $request->interval_months,
 ]);
 
-        // Zugehörige Messwerte holen (erste Messung dieser Prüfung)
-        $measurement = $inspection->measurements()->first();
+    // NÄCHSTE PRÜFUNG NEU BERECHNEN
+    $months = $inspection->interval_months ?? 12;
 
-        if ($measurement) {
-            $measurement->update([
-                'rpe' => $request->rpe,
-                'rpe_result' => $request->rpe_result,
-                'riso' => $request->riso,
-                'riso_result' => $request->riso_result,
-                'leakage' => $request->leakage,
-                'leakage_result' => $request->leakage_result,
-            ]);
-        }
+    $inspection->device->update([
+        'next_inspection' => Carbon::parse($inspection->inspection_date)
+            ->addMonthsNoOverflow($months),
+    ]);
 
-        return redirect()
-            ->route('devices.show', $inspection->device)
-            ->with('status', 'Prüfung aktualisiert');
+    $measurement = $inspection->measurements()->first();
+
+    if ($measurement) {
+        $measurement->update([
+            'rpe' => $request->rpe,
+            'rpe_result' => $request->rpe_result,
+            'riso' => $request->riso,
+            'riso_result' => $request->riso_result,
+            'leakage' => $request->leakage,
+            'leakage_result' => $request->leakage_result,
+        ]);
     }
+
+    return redirect()
+        ->route('devices.show', $inspection->device)
+        ->with('status', 'Prüfung aktualisiert');
+}
+
 }
