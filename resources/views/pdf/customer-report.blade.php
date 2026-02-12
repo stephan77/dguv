@@ -82,7 +82,14 @@
     if(!$inspection) continue;
 
     $m = $inspection->measurements->first();
-    $data = $m->raw_data ?? [];
+    $data = is_array($m?->raw_data ?? null) ? $m->raw_data : [];
+
+    $tester = optional($inspection->tester);
+    $testerName = $tester->name ?? $inspection->tester_device ?? 'Benning ST725';
+    $testerSerial = $tester->serial_number ?? $inspection->tester_serial ?? '-';
+    $testerCalibratedUntil = optional($tester->calibrated_until)->format('d.m.Y')
+        ?? optional($inspection->tester_calibrated_at)->format('d.m.Y')
+        ?? '-';
 
     $isWelder = str_contains($inspection->standard ?? '', '60974');
     $class = $inspection->protection_class ?? 'I';
@@ -163,7 +170,7 @@
 
     <!-- INSPECTION META -->
     <div class="block">
-        <h2>Prüfung vom {{ $inspection->inspection_date->format('d.m.Y') }}</h2>
+        <h2>Prüfung vom {{ optional($inspection->inspection_date)->format('d.m.Y') ?? '-' }}</h2>
 
         <table class="rowmini">
             <tr>
@@ -180,13 +187,13 @@
             </tr>
             <tr>
                 <td><strong>Messgerät</strong></td>
-                <td>{{ optional($inspection->tester)->name ?? 'Benning ST725' }}</td>
+                <td>{{ $testerName }}</td>
                 <td><strong>Seriennr.</strong></td>
-                <td>{{ optional($inspection->tester)->serial_number ?? '-' }}</td>
+                <td>{{ $testerSerial }}</td>
             </tr>
             <tr>
                 <td><strong>Kalibriert bis</strong></td>
-                <td>{{ optional(optional($inspection->tester)->calibrated_until)->format('d.m.Y') ?? '-' }}</td>
+                <td>{{ $testerCalibratedUntil }}</td>
                 <td><strong>Norm</strong></td>
                 <td>{{ $inspection->standard }}</td>
             </tr>
@@ -280,7 +287,7 @@
                 </td>
                 <td style="width:50%">
                     Kunde: <span class="line"></span><br>
-                    <span style="font-size:9px;">{{ $inspection->inspection_date->format('d.m.Y') }}</span>
+                    <span style="font-size:9px;">{{ optional($inspection->inspection_date)->format('d.m.Y') ?? '-' }}</span>
                 </td>
             </tr>
         </table>

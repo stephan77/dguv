@@ -122,12 +122,14 @@
     <label class="block mb-2 font-medium">Prüfgerät</label>
     <select name="test_device_id" class="w-full border rounded p-2">
         <option value="">–</option>
-        @foreach($testDevices as $td)
+        @forelse(($testDevices ?? collect()) as $td)
             <option value="{{ $td->id }}"
                 @selected($inspection->test_device_id == $td->id)>
                 {{ $td->name }} – {{ $td->serial_number }}
             </option>
-        @endforeach
+        @empty
+            <option value="" disabled>Keine Prüfgeräte vorhanden</option>
+        @endforelse
     </select>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

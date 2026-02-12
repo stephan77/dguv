@@ -12,7 +12,7 @@ class ReportController extends Controller
 {
     public function customer(Customer $customer): Response
     {
-        $customer->load(['devices.inspections.measurements']);
+        $customer->load(['devices.inspections.measurements', 'devices.inspections.tester']);
 
         $pdf = Pdf::loadView('pdf.customer-report', [
             'customer' => $customer,
