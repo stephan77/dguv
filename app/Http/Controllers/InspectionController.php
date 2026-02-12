@@ -69,7 +69,7 @@ public function store(InspectionRequest $request, Device $device): RedirectRespo
 
 public function edit(Inspection $inspection)
 {
-    $testDevices = TestDevice::all();
+    $testDevices = TestDevice::orderBy('name')->get();
 
     return view('inspections.edit', compact('inspection', 'testDevices'));
 }

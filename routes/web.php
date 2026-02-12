@@ -105,7 +105,7 @@ Route::get('/customers/{customer}/export-qr',
     // Prüfung speichern (Update)
     Route::put('/inspections/{inspection}', [InspectionController::class, 'update'])
         ->name('inspections.update');
-    Route::resource('test-devices', \App\Http\Controllers\TestDeviceController::class);    
+    Route::resource('test-devices', \App\Http\Controllers\TestDeviceController::class)->except(['show']);    
 });
 
 // Laravel Standard Auth-Routen (Login, Logout, Passwort, etc.)

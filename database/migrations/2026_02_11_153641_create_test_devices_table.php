@@ -11,15 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-Schema::create('test_devices', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');              // BENNING ST725
-    $table->string('manufacturer')->nullable();
-    $table->string('serial_number');     // wichtig!
-    $table->date('calibrated_at')->nullable();
-    $table->date('calibrated_until')->nullable();
-    $table->timestamps();
-});
+        if (Schema::hasTable('test_devices')) {
+            return;
+        }
+
+        Schema::create('test_devices', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');              // BENNING ST725
+            $table->string('manufacturer')->nullable();
+            $table->string('serial_number');     // wichtig!
+            $table->date('calibrated_at')->nullable();
+            $table->date('calibrated_until')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
