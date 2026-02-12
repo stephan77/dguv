@@ -1,59 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+DGUV Prüfmanagement – Professionelle Prüfsoftware für Elektro- und Prüfbetriebe
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+🚀 Kurzbeschreibung
 
-## About Laravel
+DGUV Prüfmanagement ist eine spezialisierte Web-Software für Elektrofirmen, Prüfdienstleister und Instandhaltungsabteilungen zur strukturierten, rechtssicheren Dokumentation elektrischer Betriebsmittelprüfungen nach DGUV Vorschrift 3.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Die Anwendung ersetzt Excel-Listen, Papierprotokolle und verteilte Insellösungen durch ein zentrales System für Geräteverwaltung, Prüfplanung, Messwertimport und automatisch erzeugte Prüfberichte.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Ziel ist es, Prüfprozesse schneller, nachvollziehbarer und auditfähig zu machen – mit minimalem Verwaltungsaufwand.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+⸻
 
-## Learning Laravel
+🎯 Für wen ist die Software gedacht?
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Diese Lösung richtet sich an:
+	•	Elektroinstallationsbetriebe
+	•	DGUV-Prüfdienstleister
+	•	Industrie-Instandhaltung
+	•	Facility-Management-Teams
+	•	Servicefirmen mit wiederkehrenden Geräteprüfungen
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Besonders geeignet für kleine bis mittlere Teams, die ihre Prüfprozesse professionalisieren möchten.
 
-## Laravel Sponsors
+⸻
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+🧩 Welches Problem wird gelöst?
 
-### Premium Partners
+Viele Betriebe arbeiten noch mit:
+	•	Excel-Listen
+	•	handschriftlichen Prüfprotokollen
+	•	unübersichtlichen Geräteverzeichnissen
+	•	vergessenen Prüffristen
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Das führt zu:
+	•	hohem Verwaltungsaufwand
+	•	Fehlern bei der Dokumentation
+	•	fehlenden Nachweisen im Ernstfall
+	•	Stress bei Kunden- oder BG-Kontrollen
 
-## Contributing
+DGUV Prüfmanagement bündelt alles in einem System:
+	•	Geräte
+	•	Kunden
+	•	Prüfungen
+	•	Messwerte
+	•	Berichte
+	•	Fristen
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+⸻
 
-## Code of Conduct
+💡 Kernnutzen
+	•	Strukturierte Prüfverwaltung statt Excel-Chaos
+	•	Automatische Berechnung der nächsten Prüftermine
+	•	Zentrale Kunden- und Gerätehistorie
+	•	Saubere PDF-Prüfberichte auf Knopfdruck
+	•	Import von Messwerten (z. B. Benning ST725 CSV)
+	•	Nachvollziehbare Dokumentation für Audits und Nachweise
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+⸻
 
-## Security Vulnerabilities
+⚙️ Funktionsübersicht
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Geräteverwaltung
+	•	Geräte pro Kunde erfassen
+	•	Inventarnummern und Standorte verwalten
+	•	Prüfverlauf pro Gerät einsehbar
 
-## License
+Prüfmanagement
+	•	Wiederholungsprüfungen dokumentieren
+	•	Schutzklasse, Prüfgrund, Normen hinterlegen
+	•	Automatische Terminfortschreibung über Prüfintervalle
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Messwertintegration
+	•	Import von Messdaten (z. B. Benning ST725 CSV)
+	•	Speicherung von Messwerten je Prüfung
+	•	Grundlage für Berichte und Bewertungen
+
+Prüfberichte
+	•	PDF-Protokolle je Kunde
+	•	Übersichtliche Darstellung von:
+	•	Gerätedaten
+	•	Prüfer
+	•	Messwerten
+	•	Grenzwerten
+	•	Gesamtbewertung
+
+QR- & Exportfunktionen
+	•	Geräteexporte
+	•	QR-Label-Workflows
+	•	Datenexport für Dokumentation oder Übergabe
+
+Prüfgeräteverwaltung
+	•	Verwaltung der eingesetzten Messgeräte
+	•	Seriennummern und Kalibrierdaten
+	•	Referenz in Prüfprotokollen
+
+⸻
+
+🏢 Einsatz im Alltag
+
+Typischer Ablauf:
+	1.	Kunde anlegen
+	2.	Geräte erfassen
+	3.	Prüfung durchführen
+	4.	Messwerte importieren oder eintragen
+	5.	PDF-Report erzeugen
+	6.	Nächsten Prüftermin automatisch planen
+
+So entsteht mit jeder Prüfung eine vollständige, nachvollziehbare Gerätehistorie.
+
+⸻
+
+🔐 Ziel: Rechtssichere Dokumentation
+
+Die Software unterstützt Betriebe dabei:
+	•	Prüfungen nachvollziehbar zu dokumentieren
+	•	Gerätehistorien sauber zu führen
+	•	Fristen im Blick zu behalten
+	•	im Fall von Audits oder Prüfungen Nachweise zu liefern
+
+Sie ist als praxisnahes Werkzeug für den realen Prüfablauf konzipiert – nicht als überladene Enterprise-Suite.
+
+⸻
+
+🛠️ Technische Basis
+	•	Laravel (PHP)
+	•	Webbasierte Anwendung
+	•	PDF-Generierung für Prüfprotokolle
+	•	CSV-Importpipeline für Messgeräte
+
+⸻
+
+📦 Projektstatus
+
+Das System wird aktiv weiterentwickelt und ist auf den realen Einsatz in Prüf- und Elektrobetrieben ausgerichtet.
+
+Der Fokus liegt auf:
+	•	Stabilität
+	•	klaren Workflows
+	•	praxisnahen Funktionen
+
+⸻
+
+⚠️ Nutzung & Lizenz
+
+Dieses Repository ist Teil eines kommerziellen Softwareprojekts.
+Der Code dient der Entwicklung und dem Betrieb der Anwendung und ist nicht zur freien Weiterverwendung vorgesehen.
+
+⸻
+
+📞 Kontakt
+
+Bei Interesse, Fragen oder Zusammenarbeit bitte direkt an den Projektinhaber wenden.
+	•	
