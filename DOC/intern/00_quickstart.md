@@ -52,7 +52,8 @@ php artisan test
 - [ ] Gerät kann für Kunde angelegt werden.
 - [ ] Prüfung kann angelegt werden.
 
-## Neu: Geräte-Medien (Bilder/Videos)
-- Feature: Upload, Verwaltung und Anzeige von Gerätemedien auf der Gerätedetailseite.
+## Neu: Medien für Devices & Prüfgeräte (Bilder/Videos)
+- Feature: Upload, Verwaltung und Anzeige von Medien auf Device- und Prüfgeräte-Detailseiten.
 - Unterstützte Formate: `jpg`, `jpeg`, `png`, `webp`, `mp4`, `webm`.
+- Das gleiche Media-Backend (`MediaService` + `device_media` polymorph) versorgt beide Bereiche.
 - Nach Migration sollte einmal `php artisan storage:link` geprüft werden, damit Medien-URLs (`/storage/...`) erreichbar sind.

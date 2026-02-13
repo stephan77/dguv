@@ -9,7 +9,7 @@ class TestDeviceController extends Controller
 {
     public function index()
     {
-        $devices = TestDevice::orderBy('name')->get();
+        $devices = TestDevice::with('primaryMedia')->orderBy('name')->get();
         return view('test_devices.index', compact('devices'));
     }
 
@@ -27,6 +27,13 @@ class TestDeviceController extends Controller
         ]));
 
         return redirect()->route('test-devices.index');
+    }
+
+    public function show(TestDevice $testDevice)
+    {
+        $testDevice->load(['inspections.device.customer', 'media']);
+
+        return view('test_devices.show', compact('testDevice'));
     }
 
     public function edit(TestDevice $testDevice)

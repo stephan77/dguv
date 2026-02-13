@@ -43,13 +43,14 @@ sequenceDiagram
 - Freigabe-/Review-Prozess für Prüfungen im Sinne 4-Augen-Prinzip -> `UNBEKANNT / FEHLT`.
 - Mandanten-/Rollenkonzept pro Kunde -> `UNBEKANNT / FEHLT`.
 
-## Medienlogik (DeviceMedia)
-- Upload akzeptiert Bilder und Videos in einem Request.
+## Medienlogik (polymorph: Device + Prüfgerät)
+- Upload akzeptiert Bilder und Videos in einem Request (gleiches Regelwerk für beide Entitäten).
 - Für Bilder wird serverseitig eine Thumbnail-Variante erzeugt (quadratisch, komprimiert als WebP).
-- Es darf fachlich genau ein Hauptbild geben:
+- Es darf pro Entität fachlich genau ein Hauptbild geben:
   - Beim ersten Bild-Upload wird `is_primary=true` gesetzt.
-  - Beim Setzen eines neuen Hauptbilds werden andere Einträge auf `false` gesetzt.
+  - Beim Setzen eines neuen Hauptbilds werden andere Einträge derselben Entität auf `false` gesetzt.
   - Wird das Hauptbild gelöscht, wird das neueste verbleibende Bild automatisch Hauptbild.
 - Anzeigepriorität:
-  1. `primaryMedia` für kompaktes Icon in Übersichten.
+  1. `primaryMedia` für kompaktes Icon in Übersichten (Kunden-Geräte und Prüfgeräteliste).
   2. Vollständige, gemischte Medienliste (Bild/Video) in der Detail-Slideshow.
+- Technisch zentralisiert über `MediaService` + gemeinsame Blade-Komponente `media/manager.blade.php`.

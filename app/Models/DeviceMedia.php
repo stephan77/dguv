@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class DeviceMedia extends Model
 {
@@ -13,6 +14,8 @@ class DeviceMedia extends Model
 
     protected $fillable = [
         'device_id',
+        'mediable_id',
+        'mediable_type',
         'file_path',
         'thumbnail_path',
         'file_type',
@@ -30,6 +33,11 @@ class DeviceMedia extends Model
         'file_url',
         'thumbnail_url',
     ];
+
+    public function mediable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 
     public function device(): BelongsTo
     {
