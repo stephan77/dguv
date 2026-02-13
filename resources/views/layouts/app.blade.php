@@ -15,19 +15,35 @@
 </head>
 <body class="bg-slate-100 text-slate-900 antialiased">
 
-<div x-data="{ sidebarOpen: window.matchMedia('(min-width: 1024px)').matches }" class="min-h-screen flex">
+<div
+    x-data="{
+        isDesktop: window.matchMedia('(min-width: 1024px)').matches,
+        sidebarOpen: window.matchMedia('(min-width: 1024px)').matches,
+        init() {
+            window.addEventListener('resize', () => {
+                this.isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+                if (! this.isDesktop) {
+                    this.sidebarOpen = false;
+                }
+            });
+        }
+    }"
+    class="min-h-screen flex"
+>
 
     @auth
         <!-- MOBILE OVERLAY -->
         <div class="fixed inset-0 z-40 bg-slate-900/50 lg:hidden"
-             x-show="sidebarOpen"
+             x-show="sidebarOpen && !isDesktop"
+             x-cloak
              x-transition.opacity
              @click="sidebarOpen = false"></div>
 
         <!-- SIDEBAR -->
         <aside
-            class="fixed inset-y-0 left-0 z-50 bg-slate-900 text-white transition-all duration-300 lg:static"
-            :class="sidebarOpen ? 'w-64' : 'w-20'"
+            class="fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transition-all duration-300 lg:static lg:translate-x-0"
+            :class="sidebarOpen ? 'translate-x-0 lg:w-64' : '-translate-x-full lg:translate-x-0 lg:w-20'"
         >
             <!-- HEADER -->
             <div class="flex items-center justify-between px-6 py-6">
@@ -128,18 +144,23 @@
          :class="sidebarOpen ? 'lg:pl-64' : 'lg:pl-20'">
 
         <header class="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white/80 px-6 py-4 backdrop-blur">
-            <div>
-                <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Übersicht</p>
-                <h2 class="text-xl font-semibold">Inspektionszentrum</h2>
-            </div>
-
-            @auth
-                <button class="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 lg:hidden"
+            <div class="flex items-center gap-3">
+                @auth
+                    <button
+                        class="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xl font-semibold text-slate-700 lg:hidden"
                         type="button"
-                        @click="sidebarOpen = true">
-                    Menü
-                </button>
-            @endauth
+                        @click="sidebarOpen = true"
+                        aria-label="Menü öffnen"
+                    >
+                        ☰
+                    </button>
+                @endauth
+
+                <div>
+                    <p class="text-xs uppercase tracking-[0.3em] text-slate-400">Übersicht</p>
+                    <h2 class="text-xl font-semibold">Inspektionszentrum</h2>
+                </div>
+            </div>
         </header>
 
         <main class="p-4 sm:p-6 lg:p-8 ">
