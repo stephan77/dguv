@@ -13,7 +13,7 @@
 </div>
 
         <div class="overflow-x-auto">
-            <table class="min-w-full text-sm">
+            <table class="min-w-full text-sm responsive-table-card tablet-compact">
                 <thead class="bg-slate-50">
                     <tr>
                         <th class="text-left px-4 py-3 font-medium text-slate-600">Inventar</th>
@@ -27,25 +27,25 @@
                 <tbody class="divide-y">
                     @forelse ($devices as $device)
                         <tr>
-                            <td class="px-4 py-3 font-medium">
+                            <td class="px-4 py-3 font-medium" data-label="Inventar">
                                 {{ $device->inventory_number }}
                             </td>
 
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3" data-label="Gerät">
                                 {{ $device->name }}
                             </td>
 
-                            <td class="px-4 py-3 text-slate-600">
+                            <td class="px-4 py-3 text-slate-600" data-label="Kunde">
                                 {{ $device->customer->company }}
                             </td>
 
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3" data-label="Nächste Prüfung">
                                 {{ optional($device->next_inspection)->format('d.m.Y') }}
                             </td>
 
-                            <td class="px-4 py-3 text-right">
+                            <td class="px-4 py-3 text-right" data-label="Aktion">
                                 <a href="{{ route('devices.show', $device) }}"
-                                   class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 hover:bg-slate-50">
+                                   class="px-3 py-2 text-xs rounded-lg border border-slate-300 hover:bg-slate-50 inline-flex items-center justify-center touch-target">
                                     Details
                                 </a>
                             </td>

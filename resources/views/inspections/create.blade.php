@@ -10,9 +10,15 @@
 
         <form method="POST"
               action="{{ route('devices.inspections.store', $device) }}"
-              class="space-y-6">
+              class="space-y-6 mobile-form">
             @csrf
 
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button type="button" class="rounded-xl bg-emerald-600 text-white px-4 py-3 font-medium touch-target" onclick="document.getElementById('passed').value='1'">OK</button>
+                <button type="button" class="rounded-xl bg-amber-600 text-white px-4 py-3 font-medium touch-target" onclick="document.getElementById('passed').value='0'">Mangel</button>
+                <a href="{{ route('devices.show', $device) }}#media-section" class="rounded-xl bg-slate-900 text-white px-4 py-3 font-medium text-center touch-target">Foto aufnehmen</a>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
                 <div>
@@ -74,14 +80,14 @@
 
             </div>
 
-            <div class="pt-4 flex gap-3">
+            <div class="pt-4 flex gap-3 mobile-stack-actions">
                 <button type="submit"
-                        class="inline-flex items-center rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800">
+                        class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-medium text-white hover:bg-slate-800 touch-target">
                     Prüfung speichern
                 </button>
 
                 <a href="{{ route('devices.show', $device) }}"
-                   class="inline-flex items-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                   class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 touch-target">
                     Abbrechen
                 </a>
             </div>

@@ -11,7 +11,7 @@
         </div>
 
         <a href="{{ route('test-devices.create') }}"
-           class="inline-flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-green-700">
+           class="inline-flex items-center gap-2 rounded-xl bg-green-600 px-4 py-2.5 text-sm font-medium text-white shadow hover:bg-green-700 touch-target">
             + Neues Prüfgerät
         </a>
     </div>
@@ -26,7 +26,7 @@
             </div>
         @else
 
-        <table class="w-full text-sm">
+        <table class="w-full text-sm responsive-table-card tablet-compact">
             <thead class="bg-slate-50 text-slate-600">
                 <tr>
                     <th class="text-left px-6 py-4 font-semibold">Name</th>
@@ -49,23 +49,23 @@
                     @endphp
 
                     <tr class="hover:bg-slate-50 transition">
-                        <td class="px-6 py-4 font-medium text-slate-800">
+                        <td class="px-6 py-4 font-medium text-slate-800" data-label="Name">
                             <a href="{{ route('test-devices.show', $d) }}" class="font-medium text-slate-800 hover:text-blue-700">{{ $d->name }}</a>
                         </td>
 
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4" data-label="Icon">
                             @if($d->primaryMedia)
-                                <img src="{{ $d->primaryMedia->thumbnail_url ?? $d->primaryMedia->file_url }}" alt="Icon {{ $d->name }}" class="w-8 h-8 rounded object-cover border border-slate-200">
+                                <img src="{{ $d->primaryMedia->thumbnail_url ?? $d->primaryMedia->file_url }}" alt="Icon {{ $d->name }}" class="w-8 h-8 rounded object-cover border border-slate-200" loading="lazy">
                             @else
                                 <span class="text-slate-400">–</span>
                             @endif
                         </td>
 
-                        <td class="px-6 py-4 text-slate-600">
+                        <td class="px-6 py-4 text-slate-600" data-label="Seriennummer">
                             {{ $d->serial_number }}
                         </td>
 
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4" data-label="Kalibriert bis">
                             @if(!$d->calibrated_until)
                                 <span class="text-slate-400">–</span>
                             @else
@@ -91,13 +91,13 @@
                             @endif
                         </td>
 
-                        <td class="px-6 py-4 text-right">
+                        <td class="px-6 py-4 text-right" data-label="Aktion">
                             <a href="{{ route('test-devices.show', $d) }}"
-                               class="text-slate-700 hover:text-slate-900 font-medium mr-3">
+                               class="text-slate-700 hover:text-slate-900 font-medium mr-3 inline-flex items-center justify-center touch-target">
                                 Details
                             </a>
                             <a href="{{ route('test-devices.edit', $d) }}"
-                               class="text-blue-600 hover:text-blue-800 font-medium">
+                               class="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center justify-center touch-target">
                                 Bearbeiten
                             </a>
                         </td>

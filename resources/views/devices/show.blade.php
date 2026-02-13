@@ -26,20 +26,20 @@
                 </p>
             </div>
 
-            <div class="flex gap-2 flex-wrap justify-end">
+            <div class="flex gap-2 flex-wrap justify-end mobile-stack-actions">
                 <button type="button"
                         id="open-upload-modal"
-                        class="px-4 py-2 text-sm rounded-xl border border-slate-300 hover:bg-slate-50">
+                        class="px-4 py-2.5 text-sm rounded-xl border border-slate-300 hover:bg-slate-50 inline-flex items-center justify-center touch-target">
                     Bilder/Videos hochladen
                 </button>
 
                 <a href="{{ route('devices.edit', $device) }}"
-                   class="px-4 py-2 text-sm rounded-xl border border-slate-300 hover:bg-slate-50">
+                   class="px-4 py-2.5 text-sm rounded-xl border border-slate-300 hover:bg-slate-50 inline-flex items-center justify-center touch-target">
                     Bearbeiten
                 </a>
 
                 <a href="{{ route('devices.label', $device) }}"
-                   class="px-4 py-2 text-sm rounded-xl bg-slate-900 text-white hover:bg-slate-800">
+                   class="px-4 py-2.5 text-sm rounded-xl bg-slate-900 text-white hover:bg-slate-800 inline-flex items-center justify-center touch-target">
                     Etikett drucken
                 </a>
 
@@ -47,7 +47,7 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="px-4 py-2 text-sm rounded-xl bg-red-600 text-white hover:bg-red-700">
+                        class="px-4 py-2.5 text-sm rounded-xl bg-red-600 text-white hover:bg-red-700 w-full touch-target">
                         Löschen
                     </button>
                 </form>
@@ -82,7 +82,7 @@
             </div>
 
             <a href="{{ route('devices.inspections.create', $device) }}"
-               class="mt-4 inline-flex justify-center px-4 py-2 text-sm rounded-xl bg-slate-900 text-white hover:bg-slate-800">
+               class="mt-4 inline-flex justify-center px-4 py-2.5 text-sm rounded-xl bg-slate-900 text-white hover:bg-slate-800 touch-target">
                 Prüfung anlegen
             </a>
         </div>
@@ -94,7 +94,7 @@
         <h3 class="text-lg font-semibold mb-4">Bisherige Prüfungen</h3>
 
         <div class="overflow-x-auto">
-            <table class="min-w-full text-sm">
+            <table class="min-w-full text-sm responsive-table-card tablet-compact">
                 <thead class="bg-slate-50">
                     <tr>
                         <th class="text-left px-4 py-3 font-medium text-slate-600">Datum</th>
@@ -109,21 +109,21 @@
                 <tbody class="divide-y">
                     @forelse ($device->inspections as $inspection)
                         <tr>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3" data-label="Datum">
                                 {{ $inspection->inspection_date->format('d.m.Y') }}
                             </td>
 
-                            <td class="px-4 py-3">{{ $inspection->inspector }}</td>
-                            <td class="px-4 py-3">{{ $inspection->standard }}</td>
+                            <td class="px-4 py-3" data-label="Prüfer">{{ $inspection->inspector }}</td>
+                            <td class="px-4 py-3" data-label="Norm">{{ $inspection->standard }}</td>
 
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3" data-label="Status">
                                 <span class="px-2 py-1 text-xs rounded-lg
                                     {{ $inspection->passed ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' }}">
                                     {{ $inspection->passed ? 'Bestanden' : 'Nicht bestanden' }}
                                 </span>
                             </td>
 
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-3" data-label="Messwerte">
                                 @foreach ($inspection->measurements as $measurement)
                                     <div class="mb-3">
                                         <div class="font-semibold">
@@ -145,9 +145,9 @@
                                 @endforeach
                             </td>
 
-                            <td class="px-4 py-3 flex gap-2">
+                            <td class="px-4 py-3 flex gap-2 mobile-stack-actions" data-label="Aktionen">
                                 <a href="{{ route('inspections.edit', $inspection) }}"
-                                   class="px-3 py-1.5 text-xs rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+                                   class="px-3 py-2 text-xs rounded-lg bg-blue-600 text-white hover:bg-blue-700 inline-flex items-center justify-center touch-target">
                                     Bearbeiten
                                 </a>
 
@@ -155,7 +155,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="px-3 py-1.5 text-xs rounded-lg bg-red-600 text-white hover:bg-red-700">
+                                        class="px-3 py-2 text-xs rounded-lg bg-red-600 text-white hover:bg-red-700 w-full touch-target">
                                         Löschen
                                     </button>
                                 </form>
