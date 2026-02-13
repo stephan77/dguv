@@ -3,12 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DGUV Prüfmanagement">
+    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.ico') }}">
     <title>{{ config('app.name', 'DGUV Prüfmanagement') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-slate-100 text-slate-900 antialiased">
 
-<div x-data="{ sidebarOpen: true }" class="min-h-screen flex">
+<div x-data="{ sidebarOpen: window.matchMedia('(min-width: 1024px)').matches }" class="min-h-screen flex">
 
     @auth
         <!-- MOBILE OVERLAY -->
@@ -45,10 +52,10 @@
             </div>
 
             <!-- NAV -->
-            <nav class="px-2 pb-6">
+            <nav class="px-3 pb-6">
                 <div class="space-y-2">
 
-                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    <a class="flex min-h-11 items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
                        href="{{ route('dashboard') }}">
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">
                             🏠
@@ -56,36 +63,36 @@
                         <span x-show="sidebarOpen">Dashboard</span>
                     </a>
 
-                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    <a class="flex min-h-11 items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
                        href="{{ route('customers.index') }}">
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">👥</span>
                         <span x-show="sidebarOpen">Kunden</span>
                     </a>
 
-                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    <a class="flex min-h-11 items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
                        href="{{ route('devices.index') }}">
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">🧰</span>
                         <span x-show="sidebarOpen">Geräte</span>
                     </a>
 
-                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    <a class="flex min-h-11 items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
                        href="{{ route('imports.index') }}">
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">📥</span>
                         <span x-show="sidebarOpen">Import</span>
                     </a>
 
-                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    <a class="flex min-h-11 items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
                        href="{{ route('reports.index') }}">
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">📊</span>
                         <span x-show="sidebarOpen">Berichte</span>
                     </a>
 
-                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    <a class="flex min-h-11 items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
                        href="{{ route('users.index') }}">
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">👤</span>
                         <span x-show="sidebarOpen">Benutzer</span>
                     </a>
-                    <a class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    <a class="flex min-h-11 items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800"
                         href="{{ route('test-devices.index') }}">
                         <span class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800">🧪</span>
                         <span x-show="sidebarOpen">Prüfgeräte</span>
@@ -108,7 +115,7 @@
 
                 <form method="POST" action="{{ route('logout') }}" class="mt-4" x-show="sidebarOpen">
                     @csrf
-                    <button class="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-sm font-medium text-slate-100 hover:border-slate-500">
+                <button class="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-sm font-medium text-slate-100 hover:border-slate-500 min-h-11">
                         Logout
                     </button>
                 </form>
@@ -127,7 +134,7 @@
             </div>
 
             @auth
-                <button class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 lg:hidden"
+                <button class="inline-flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 lg:hidden"
                         type="button"
                         @click="sidebarOpen = true">
                     Menü

@@ -54,3 +54,11 @@ sequenceDiagram
   1. `primaryMedia` für kompaktes Icon in Übersichten (Kunden-Geräte und Prüfgeräteliste).
   2. Vollständige, gemischte Medienliste (Bild/Video) in der Detail-Slideshow.
 - Technisch zentralisiert über `MediaService` + gemeinsame Blade-Komponente `media/manager.blade.php`.
+
+## Mobile Prüfmodus (UI-Erweiterung ohne Logikänderung)
+- Auf `inspections/create` gibt es große Schnellaktionen für Einhand-Bedienung:
+  - **OK**: setzt den Status auf „Bestanden“.
+  - **Mangel**: setzt den Status auf „Nicht bestanden“.
+  - **Foto aufnehmen**: führt in den Medienbereich des Geräts.
+- Diese Anpassungen ändern keine Persistenz- oder Controllerlogik; sie steuern nur vorhandene Formularfelder und bestehende Workflows.
+- Ziel: schnellere Erfassung vor Ort auf Smartphones/Tablets bei unverändertem Desktop-Verhalten.

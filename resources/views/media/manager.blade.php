@@ -12,17 +12,17 @@
     </div>
 
     <div id="media-slider" class="relative {{ collect($mediaItems)->count() === 0 ? 'hidden' : '' }}">
-        <button type="button" id="media-prev" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/60 text-white w-9 h-9">‹</button>
-        <button type="button" id="media-next" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/60 text-white w-9 h-9">›</button>
+        <button type="button" id="media-prev" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/60 text-white w-11 h-11 touch-target">‹</button>
+        <button type="button" id="media-next" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/60 text-white w-11 h-11 touch-target">›</button>
 
         <div class="rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
             <div id="media-stage" class="aspect-video w-full flex items-center justify-center"></div>
         </div>
         <div id="media-meta" class="mt-3 text-sm text-slate-600"></div>
-        <div class="mt-3 flex gap-2">
-            <button id="set-primary" type="button" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 hover:bg-slate-50">Als Hauptbild setzen</button>
-            <button id="delete-media" type="button" class="px-3 py-1.5 text-xs rounded-lg bg-red-600 text-white hover:bg-red-700">Löschen</button>
-            <button id="open-fullscreen" type="button" class="px-3 py-1.5 text-xs rounded-lg bg-slate-900 text-white hover:bg-slate-800">Vollbild</button>
+        <div class="mt-3 flex gap-2 media-mobile-actions">
+            <button id="set-primary" type="button" class="px-3 py-2 text-xs rounded-lg border border-slate-300 hover:bg-slate-50 touch-target">Als Hauptbild setzen</button>
+            <button id="delete-media" type="button" class="px-3 py-2 text-xs rounded-lg bg-red-600 text-white hover:bg-red-700 touch-target">Löschen</button>
+            <button id="open-fullscreen" type="button" class="px-3 py-2 text-xs rounded-lg bg-slate-900 text-white hover:bg-slate-800 touch-target">Vollbild</button>
         </div>
     </div>
 </div>
@@ -142,12 +142,15 @@
             video.src = item.file_url;
             video.controls = true;
             video.className = 'max-h-[480px] w-full';
+            video.setAttribute('preload', 'metadata');
             stage.appendChild(video);
             document.getElementById('set-primary').classList.add('hidden');
         } else {
             const image = document.createElement('img');
             image.src = item.file_url;
             image.className = 'max-h-[480px] object-contain';
+            image.loading = 'lazy';
+            image.addEventListener('click', () => document.getElementById('open-fullscreen').click());
             stage.appendChild(image);
             document.getElementById('set-primary').classList.remove('hidden');
         }
@@ -216,6 +219,18 @@
         fullModal.classList.remove('flex');
         document.getElementById('fullscreen-content').innerHTML = '';
     });
+
+    let touchStartX = 0;
+    stage.addEventListener('touchstart', (event) => {
+        touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    stage.addEventListener('touchend', (event) => {
+        const delta = event.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(delta) < 50) return;
+        mediaState.index += delta < 0 ? 1 : -1;
+        renderMedia();
+    }, { passive: true });
 
     renderMedia();
 })();

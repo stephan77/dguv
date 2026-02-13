@@ -12,7 +12,8 @@
     @endphp
 
     <form method="POST"
-          action="{{ route('inspections.update', $inspection) }}">
+          action="{{ route('inspections.update', $inspection) }}"
+          class="mobile-form">
         @csrf
         @method('PUT')
 
@@ -24,7 +25,7 @@
         <input type="date"
                name="inspection_date"
                value="{{ optional($inspection->inspection_date)->format('Y-m-d') }}"
-               class="w-full border rounded p-2">
+               class="w-full border rounded-xl p-3">
     </div>
 
     <div>
@@ -32,12 +33,12 @@
         <input type="text"
                name="inspector"
                value="{{ $inspection->inspector }}"
-               class="w-full border rounded p-2">
+               class="w-full border rounded-xl p-3">
     </div>
 
     <div class="md:col-span-2">
         <label class="block mb-2 font-medium">Gesamtergebnis</label>
-        <select name="passed" class="w-full border rounded p-2">
+        <select name="passed" class="w-full border rounded-xl p-3">
             <option value="1" @selected($inspection->passed)>Bestanden</option>
             <option value="0" @selected(!$inspection->passed)>Nicht bestanden</option>
         </select>
@@ -56,7 +57,7 @@
         <div class="mb-6">
             <label class="block mb-2 font-medium">Kommentar</label>
             <textarea name="notes"
-                      class="w-full border rounded p-2"
+                      class="w-full border rounded-xl p-3"
                       rows="3">{{ $inspection->notes }}</textarea>
         </div>
 
@@ -71,12 +72,12 @@
                 <input type="text"
                        name="rpe"
                        value="{{ $measurement->rpe ?? '' }}"
-                       class="w-full border rounded p-2">
+                       class="w-full border rounded-xl p-3">
             </div>
 
             <div>
                 <label class="block mb-2">RPE Ergebnis</label>
-                <select name="rpe_result" class="w-full border rounded p-2">
+                <select name="rpe_result" class="w-full border rounded-xl p-3">
                     <option value="bestanden" @selected(($measurement->rpe_result ?? '')=='bestanden')>Bestanden</option>
                     <option value="nicht bestanden" @selected(($measurement->rpe_result ?? '')=='nicht bestanden')>Nicht bestanden</option>
                 </select>
@@ -87,12 +88,12 @@
                 <input type="text"
                        name="riso"
                        value="{{ $measurement->riso ?? '' }}"
-                       class="w-full border rounded p-2">
+                       class="w-full border rounded-xl p-3">
             </div>
 
             <div>
                 <label class="block mb-2">RISO Ergebnis</label>
-                <select name="riso_result" class="w-full border rounded p-2">
+                <select name="riso_result" class="w-full border rounded-xl p-3">
                     <option value="bestanden" @selected(($measurement->riso_result ?? '')=='bestanden')>Bestanden</option>
                     <option value="nicht bestanden" @selected(($measurement->riso_result ?? '')=='nicht bestanden')>Nicht bestanden</option>
                 </select>
@@ -103,12 +104,12 @@
                 <input type="text"
                        name="leakage"
                        value="{{ $measurement->leakage ?? '' }}"
-                       class="w-full border rounded p-2">
+                       class="w-full border rounded-xl p-3">
             </div>
 
             <div>
                 <label class="block mb-2">Leakage Ergebnis</label>
-                <select name="leakage_result" class="w-full border rounded p-2">
+                <select name="leakage_result" class="w-full border rounded-xl p-3">
                     <option value="bestanden" @selected(($measurement->leakage_result ?? '')=='bestanden')>Bestanden</option>
                     <option value="nicht bestanden" @selected(($measurement->leakage_result ?? '')=='nicht bestanden')>Nicht bestanden</option>
                 </select>
@@ -120,7 +121,7 @@
 <h3 class="font-semibold mb-4">Prüfdetails</h3>
 <div>
     <label class="block mb-2 font-medium">Prüfgerät</label>
-    <select name="test_device_id" class="w-full border rounded p-2">
+    <select name="test_device_id" class="w-full border rounded-xl p-3">
         <option value="">–</option>
         @forelse(($testDevices ?? collect()) as $td)
             <option value="{{ $td->id }}"
@@ -136,7 +137,7 @@
 
     <div>
         <label class="block mb-2 font-medium">Prüfgrund</label>
-        <select name="test_reason" class="w-full border rounded p-2">
+        <select name="test_reason" class="w-full border rounded-xl p-3">
             <option value="">–</option>
             <option value="Erstprüfung" @selected($inspection->test_reason=='Erstprüfung')>Erstprüfung</option>
             <option value="Wiederholungsprüfung" @selected($inspection->test_reason=='Wiederholungsprüfung')>Wiederholungsprüfung</option>
@@ -146,7 +147,7 @@
 
     <div>
         <label class="block mb-2 font-medium">Schutzklasse</label>
-        <select name="protection_class" class="w-full border rounded p-2">
+        <select name="protection_class" class="w-full border rounded-xl p-3">
             <option value="">–</option>
             <option value="SK I" @selected($inspection->protection_class=='SK I')>SK I</option>
             <option value="SK II" @selected($inspection->protection_class=='SK II')>SK II</option>
@@ -159,7 +160,7 @@
         <input type="text"
                name="tester_device"
                value="{{ $inspection->tester_device }}"
-               class="w-full border rounded p-2"
+               class="w-full border rounded-xl p-3"
                placeholder="z.B. BENNING ST725">
     </div>
 
@@ -168,7 +169,7 @@
         <input type="text"
                name="tester_serial"
                value="{{ $inspection->tester_serial }}"
-               class="w-full border rounded p-2">
+               class="w-full border rounded-xl p-3">
     </div>
 
     <div>
@@ -176,7 +177,7 @@
         <input type="date"
                name="tester_calibrated_at"
                value="{{ optional($inspection->tester_calibrated_at)->format('Y-m-d') }}"
-               class="w-full border rounded p-2">
+               class="w-full border rounded-xl p-3">
     </div>
 
     <div>
@@ -184,12 +185,12 @@
         <input type="number"
                name="interval_months"
                value="{{ $inspection->interval_months }}"
-               class="w-full border rounded p-2"
+               class="w-full border rounded-xl p-3"
                placeholder="12">
     </div>
 
 </div>
-        <button class="w-full mt-6 py-3 bg-green-600 text-white rounded-xl">
+        <button class="w-full mt-6 py-3 bg-green-600 text-white rounded-xl touch-target text-base font-medium">
             Änderungen speichern
         </button>
     </form>

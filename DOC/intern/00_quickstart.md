@@ -57,3 +57,10 @@ php artisan test
 - Unterstützte Formate: `jpg`, `jpeg`, `png`, `webp`, `mp4`, `webm`.
 - Das gleiche Media-Backend (`MediaService` + `device_media` polymorph) versorgt beide Bereiche.
 - Nach Migration sollte einmal `php artisan storage:link` geprüft werden, damit Medien-URLs (`/storage/...`) erreichbar sind.
+
+## Mobile/Tablet Nutzung
+- Anwendung ist responsive optimiert (ein Codepfad für Desktop, Tablet, Smartphone).
+- Mobile Navigation erfolgt über das Menü-Button/Burger-Verhalten im Hauptlayout.
+- Tabellen wechseln auf Smartphones automatisch in Kartenansichten, damit keine horizontale Scrollpflicht besteht.
+- Prüf- und Stammdaten-Formulare haben mobile Touch-Abstände und größere Eingabefelder.
+- PWA-Light ist aktiv: Browser können „Zum Homescreen hinzufügen“ anbieten (Manifest + Meta-Tags).

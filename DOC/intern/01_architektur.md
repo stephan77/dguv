@@ -66,3 +66,11 @@ Neuer Teilfluss für polymorphe Medien:
 
 ## Legacy-Hinweis
 `device_id` bleibt aus Kompatibilitätsgründen in `device_media` erhalten (nullable), neue Logik nutzt `mediable_*`.
+
+## Responsive-Architektur (Desktop/Tablet/Mobile)
+- Desktop (>=1200px): bestehendes Layout bleibt unverändert; responsive Erweiterungen greifen nur unterhalb Desktop-Breakpoints.
+- Tablet (768-1199px): kompaktere Tabellenabstände (`tablet-compact`) und größere Touch-Ziele (`touch-target`).
+- Mobile (<=767px): tabellarische Übersichten werden als Karten (`responsive-table-card`) dargestellt; Aktionsleisten stacken vertikal (`mobile-stack-actions`).
+- Formulare nutzen `mobile-form` für größere Inputs/Buttons (44px+).
+- Medienbereich (`media/manager.blade.php`) wurde für Swipe, größere Controls und Mobile-Action-Stack erweitert.
+- PWA-Light: Manifest + Mobile-Meta-Tags im Hauptlayout (`layouts/app.blade.php`) für Homescreen-Installation.
