@@ -34,7 +34,7 @@ class CustomerController extends Controller
 
     public function show(Customer $customer): View
     {
-        $customer->load(['devices.inspections']);
+        $customer->load(['devices.inspections', 'devices.primaryMedia']);
 
         return view('customers.show', compact('customer'));
     }

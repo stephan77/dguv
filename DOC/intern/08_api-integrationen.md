@@ -30,3 +30,16 @@
 
 ## Nicht nachweisbar / fehlt
 - Externe REST-APIs, Queue-Broker außerhalb Laravel DB-Queue, Cloud Storage-Verbindungen, Webhooks: im Projektcode nicht aktiv genutzt bzw. nicht dokumentiert -> `UNBEKANNT / FEHLT`.
+
+## Neue interne Media-Endpoints
+Alle Endpunkte liegen im `auth`-Middleware-Kontext und nutzen die bestehende Session-Authentifizierung.
+
+- `GET /devices/{device}/media`
+  - Liefert Medienliste des Geräts (inkl. URL/Thumbnail-URL).
+- `POST /devices/{device}/media`
+  - Multipart-Upload (`files[]`) für Mehrfachupload.
+  - Validierung: erlaubte MIME-Typen + max. Dateigröße.
+- `PATCH /devices/{device}/media/{media}/primary`
+  - Setzt ein Bild als Hauptbild.
+- `DELETE /devices/{device}/media/{media}`
+  - Löscht Metadatensatz und zugehörige Datei(en) im Storage.

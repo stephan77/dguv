@@ -43,3 +43,19 @@ php artisan migrate:fresh --seed
 
 ## Backup/Restore
 - Kein Backup-/Restore-Prozess im Repo dokumentiert -> `UNBEKANNT / FEHLT`.
+
+## Neue Entität: `device_media`
+Felder:
+- `id`
+- `device_id` (FK -> `devices.id`, cascadeOnDelete)
+- `file_path`
+- `thumbnail_path` (nullable)
+- `file_type` (`image|video`)
+- `is_primary` (bool)
+- `uploaded_by` (FK -> `users.id`, nullable, nullOnDelete)
+- `uploaded_at`
+- `created_at` / `updated_at`
+
+Relationen:
+- Device `1:n` DeviceMedia (`Device::media()`)
+- Device `1:1` primäres Bild (`Device::primaryMedia()` via `is_primary=true`)

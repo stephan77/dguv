@@ -52,3 +52,14 @@ flowchart LR
 - `maatwebsite/excel` (Exporte)
 - `simplesoftwareio/simple-qrcode` (QR-Workflows)
 - `vite` + `tailwindcss` (Frontend-Build)
+
+## Media-Flow für Kunden-Devices
+Neuer Teilfluss für Gerätemedien:
+1. UI (`devices/show.blade.php`) startet Upload via Drag&Drop oder Dateiauswahl.
+2. Upload trifft `DeviceMediaController@store`.
+3. Validierung prüft MIME/Dateityp/Dateigröße.
+4. `DeviceMediaService` speichert Datei im bestehenden `public`-Storage, erzeugt bei Bildern ein Thumbnail und markiert automatisch das erste Bild als Hauptbild.
+5. Persistenz in Tabelle `device_media`.
+6. Anzeige:
+   - Hauptbild-Icon im Geräte-Listing beim Kunden neben „Nächste Prüfung“.
+   - Carousel/Slideshow im Device-Detailbereich inklusive Vollbild, Video-Playback und Metadaten.

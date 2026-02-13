@@ -93,7 +93,9 @@ class DeviceController extends Controller
     {
         $device->load([
             'customer',
-            'inspections.measurements' // verschachtelte Relation
+            'inspections.measurements', // verschachtelte Relation
+            'media',
+            'primaryMedia',
         ]);
 
         return view('devices.show', compact('device'));
