@@ -74,3 +74,11 @@ Neuer Teilfluss für polymorphe Medien:
 - Formulare nutzen `mobile-form` für größere Inputs/Buttons (44px+).
 - Medienbereich (`media/manager.blade.php`) wurde für Swipe, größere Controls und Mobile-Action-Stack erweitert.
 - PWA-Light: Manifest + Mobile-Meta-Tags im Hauptlayout (`layouts/app.blade.php`) für Homescreen-Installation.
+
+## Sidebar Responsive Verhalten (Navigation)
+- Desktop (`>=1024px` / `lg`): Sidebar bleibt wie bisher dauerhaft sichtbar; Breitenumschaltung (breit/schmal) bleibt aktiv.
+- Mobile/Tablet (`<1024px`): Sidebar startet ausgeblendet und wird als Off-Canvas von links eingeblendet (`translateX`-Animation).
+- Öffnen erfolgt über einen mobilen Hamburger-Button (`☰`) links in der Topbar.
+- Beim Öffnen wird ein halbtransparentes Vollbild-Overlay angezeigt; Klick auf Overlay oder Close-Button schließt die Sidebar.
+- Ziel: keine blockierende Dauerüberlagerung des Inhalts auf Touch-Geräten, Desktop-Verhalten bleibt unverändert.
+

@@ -111,3 +111,7 @@
         min-height: 44px;
     }
 }
+
+[x-cloak] {
+    display: none !important;
+}
