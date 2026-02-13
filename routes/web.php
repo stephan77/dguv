@@ -6,6 +6,7 @@ declare(strict_types=1);
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\DeviceMediaController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\LabelController;
@@ -62,6 +63,19 @@ Route::middleware('auth')->group(function () {
     // Standard CRUD für Geräte
     // create/store sind ausgeschlossen, weil Geräte IMMER über einen Kunden erstellt werden
     Route::resource('devices', DeviceController::class)->except(['create', 'store']);
+
+
+    Route::get('/devices/{device}/media', [DeviceMediaController::class, 'index'])
+        ->name('devices.media.index');
+
+    Route::post('/devices/{device}/media', [DeviceMediaController::class, 'store'])
+        ->name('devices.media.store');
+
+    Route::patch('/devices/{device}/media/{media}/primary', [DeviceMediaController::class, 'setPrimary'])
+        ->name('devices.media.primary');
+
+    Route::delete('/devices/{device}/media/{media}', [DeviceMediaController::class, 'destroy'])
+        ->name('devices.media.destroy');
 
     // Etikett/Label für ein Gerät
     Route::get('/devices/{device}/label', [LabelController::class, 'show'])

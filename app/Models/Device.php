@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Device extends Model
 {
@@ -36,4 +37,15 @@ class Device extends Model
     {
         return $this->hasMany(Inspection::class);
     }
+
+    public function media(): HasMany
+    {
+        return $this->hasMany(DeviceMedia::class)->orderByDesc('is_primary')->orderByDesc('uploaded_at');
+    }
+
+    public function primaryMedia(): HasOne
+    {
+        return $this->hasOne(DeviceMedia::class)->where('is_primary', true);
+    }
 }
+

@@ -24,3 +24,9 @@ php artisan pail
 - Listing-Seiten nutzen Pagination (`paginate(20)`).
 - Mehrere Controller verwenden Eager Loading (`with(...)`) gegen N+1.
 - Kein dediziertes Profiling/Tracing-Setup gefunden -> `UNBEKANNT / FEHLT`.
+
+## Medienfeature – typische Fehler
+- **Upload schlägt mit 422 fehl:** Datei nicht in erlaubtem Format oder >50MB.
+- **Medien werden im UI nicht angezeigt:** `php artisan storage:link` fehlt oder Storage-Dateirechte sind falsch.
+- **Kein Thumbnail sichtbar:** GD-Funktionen (z. B. `imagewebp`) in PHP fehlen; Originalbild wird dennoch gespeichert.
+- **Hauptbild-Icon fehlt trotz Medien:** Es existiert nur Video oder kein `is_primary=true` Bild.

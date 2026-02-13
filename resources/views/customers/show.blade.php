@@ -75,7 +75,14 @@
                         <td class="py-2 border-b">{{ $device->inventory_number }}</td>
                         <td class="py-2 border-b">{{ $device->name }}</td>
                         <td class="py-2 border-b">
-                            {{ optional($device->next_inspection)->format('d.m.Y') }}
+                            <div class="inline-flex items-center gap-2 h-6">
+                                @if($device->primaryMedia)
+                                    <img src="{{ $device->primaryMedia->thumbnail_url ?? $device->primaryMedia->file_url }}"
+                                         alt="Hauptbild {{ $device->name }}"
+                                         class="w-6 h-6 rounded object-cover border border-slate-200">
+                                @endif
+                                <span>{{ optional($device->next_inspection)->format('d.m.Y') }}</span>
+                            </div>
                         </td>
                         <td class="py-2 border-b">{{ $device->inspections->count() }}</td>
                         <td class="py-2 border-b text-right">
