@@ -7,7 +7,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Device extends Model
 {
@@ -38,14 +39,13 @@ class Device extends Model
         return $this->hasMany(Inspection::class);
     }
 
-    public function media(): HasMany
+    public function media(): MorphMany
     {
-        return $this->hasMany(DeviceMedia::class)->orderByDesc('is_primary')->orderByDesc('uploaded_at');
+        return $this->morphMany(DeviceMedia::class, 'mediable')->orderByDesc('is_primary')->orderByDesc('uploaded_at');
     }
 
-    public function primaryMedia(): HasOne
+    public function primaryMedia(): MorphOne
     {
-        return $this->hasOne(DeviceMedia::class)->where('is_primary', true);
+        return $this->morphOne(DeviceMedia::class, 'mediable')->where('is_primary', true);
     }
 }
-

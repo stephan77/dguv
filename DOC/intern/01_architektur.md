@@ -53,13 +53,16 @@ flowchart LR
 - `simplesoftwareio/simple-qrcode` (QR-Workflows)
 - `vite` + `tailwindcss` (Frontend-Build)
 
-## Media-Flow für Kunden-Devices
-Neuer Teilfluss für Gerätemedien:
-1. UI (`devices/show.blade.php`) startet Upload via Drag&Drop oder Dateiauswahl.
-2. Upload trifft `DeviceMediaController@store`.
+## Media-Flow für Devices & Prüfgeräte
+Neuer Teilfluss für polymorphe Medien:
+1. UI (`devices/show.blade.php` und `test_devices/show.blade.php`) startet Upload via Drag&Drop oder Dateiauswahl.
+2. Upload trifft `MediaController` (Device- und Prüfgeräte-Routen).
 3. Validierung prüft MIME/Dateityp/Dateigröße.
-4. `DeviceMediaService` speichert Datei im bestehenden `public`-Storage, erzeugt bei Bildern ein Thumbnail und markiert automatisch das erste Bild als Hauptbild.
-5. Persistenz in Tabelle `device_media`.
+4. `MediaService` speichert Datei im `public`-Storage, erzeugt bei Bildern ein Thumbnail und markiert automatisch das erste Bild je Entity als Hauptbild.
+5. Persistenz in Tabelle `device_media` über polymorphe Felder `mediable_type` + `mediable_id`.
 6. Anzeige:
-   - Hauptbild-Icon im Geräte-Listing beim Kunden neben „Nächste Prüfung“.
-   - Carousel/Slideshow im Device-Detailbereich inklusive Vollbild, Video-Playback und Metadaten.
+   - Hauptbild-Icon in Listen (Device und Prüfgerät).
+   - Gemeinsame Slideshow-Komponente (`resources/views/media/manager.blade.php`) für Detailseiten.
+
+## Legacy-Hinweis
+`device_id` bleibt aus Kompatibilitätsgründen in `device_media` erhalten (nullable), neue Logik nutzt `mediable_*`.

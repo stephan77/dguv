@@ -30,6 +30,7 @@
             <thead class="bg-slate-50 text-slate-600">
                 <tr>
                     <th class="text-left px-6 py-4 font-semibold">Name</th>
+                    <th class="text-left px-6 py-4 font-semibold">Icon</th>
                     <th class="text-left px-6 py-4 font-semibold">Seriennummer</th>
                     <th class="text-left px-6 py-4 font-semibold">Kalibriert bis</th>
                     <th class="text-right px-6 py-4 font-semibold">Aktion</th>
@@ -49,7 +50,15 @@
 
                     <tr class="hover:bg-slate-50 transition">
                         <td class="px-6 py-4 font-medium text-slate-800">
-                            {{ $d->name }}
+                            <a href="{{ route('test-devices.show', $d) }}" class="font-medium text-slate-800 hover:text-blue-700">{{ $d->name }}</a>
+                        </td>
+
+                        <td class="px-6 py-4">
+                            @if($d->primaryMedia)
+                                <img src="{{ $d->primaryMedia->thumbnail_url ?? $d->primaryMedia->file_url }}" alt="Icon {{ $d->name }}" class="w-8 h-8 rounded object-cover border border-slate-200">
+                            @else
+                                <span class="text-slate-400">–</span>
+                            @endif
                         </td>
 
                         <td class="px-6 py-4 text-slate-600">
@@ -83,6 +92,10 @@
                         </td>
 
                         <td class="px-6 py-4 text-right">
+                            <a href="{{ route('test-devices.show', $d) }}"
+                               class="text-slate-700 hover:text-slate-900 font-medium mr-3">
+                                Details
+                            </a>
                             <a href="{{ route('test-devices.edit', $d) }}"
                                class="text-blue-600 hover:text-blue-800 font-medium">
                                 Bearbeiten

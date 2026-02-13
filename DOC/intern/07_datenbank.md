@@ -44,18 +44,24 @@ php artisan migrate:fresh --seed
 ## Backup/Restore
 - Kein Backup-/Restore-Prozess im Repo dokumentiert -> `UNBEKANNT / FEHLT`.
 
-## Neue Entität: `device_media`
-Felder:
+## Entität: `device_media` (polymorph erweitert)
+Felder (relevant):
 - `id`
-- `device_id` (FK -> `devices.id`, cascadeOnDelete)
+- `device_id` (nullable, Legacy-FK für bestehende Device-Medien)
+- `mediable_id`
+- `mediable_type`
 - `file_path`
 - `thumbnail_path` (nullable)
 - `file_type` (`image|video`)
-- `is_primary` (bool)
+- `is_primary`
 - `uploaded_by` (FK -> `users.id`, nullable, nullOnDelete)
 - `uploaded_at`
 - `created_at` / `updated_at`
 
 Relationen:
-- Device `1:n` DeviceMedia (`Device::media()`)
-- Device `1:1` primäres Bild (`Device::primaryMedia()` via `is_primary=true`)
+- `Device::media()`/`primaryMedia()` via MorphMany/MorphOne
+- `TestDevice::media()`/`primaryMedia()` via MorphMany/MorphOne
+- `DeviceMedia::mediable()` via MorphTo
+
+Migration-Hinweis:
+- Bestehende Datensätze werden auf `mediable_id=device_id` und `mediable_type=App\Models\Device` migriert.

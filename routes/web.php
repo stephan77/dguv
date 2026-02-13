@@ -6,7 +6,7 @@ declare(strict_types=1);
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeviceController;
-use App\Http\Controllers\DeviceMediaController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\InspectionController;
 use App\Http\Controllers\LabelController;
@@ -65,17 +65,29 @@ Route::middleware('auth')->group(function () {
     Route::resource('devices', DeviceController::class)->except(['create', 'store']);
 
 
-    Route::get('/devices/{device}/media', [DeviceMediaController::class, 'index'])
+    Route::get('/devices/{device}/media', [MediaController::class, 'deviceIndex'])
         ->name('devices.media.index');
 
-    Route::post('/devices/{device}/media', [DeviceMediaController::class, 'store'])
+    Route::post('/devices/{device}/media', [MediaController::class, 'deviceStore'])
         ->name('devices.media.store');
 
-    Route::patch('/devices/{device}/media/{media}/primary', [DeviceMediaController::class, 'setPrimary'])
+    Route::patch('/devices/{device}/media/{media}/primary', [MediaController::class, 'deviceSetPrimary'])
         ->name('devices.media.primary');
 
-    Route::delete('/devices/{device}/media/{media}', [DeviceMediaController::class, 'destroy'])
+    Route::delete('/devices/{device}/media/{media}', [MediaController::class, 'deviceDestroy'])
         ->name('devices.media.destroy');
+
+    Route::get('/test-devices/{testDevice}/media', [MediaController::class, 'testDeviceIndex'])
+        ->name('test-devices.media.index');
+
+    Route::post('/test-devices/{testDevice}/media', [MediaController::class, 'testDeviceStore'])
+        ->name('test-devices.media.store');
+
+    Route::patch('/test-devices/{testDevice}/media/{media}/primary', [MediaController::class, 'testDeviceSetPrimary'])
+        ->name('test-devices.media.primary');
+
+    Route::delete('/test-devices/{testDevice}/media/{media}', [MediaController::class, 'testDeviceDestroy'])
+        ->name('test-devices.media.destroy');
 
     // Etikett/Label für ein Gerät
     Route::get('/devices/{device}/label', [LabelController::class, 'show'])
@@ -119,7 +131,7 @@ Route::get('/customers/{customer}/export-qr',
     // Prüfung speichern (Update)
     Route::put('/inspections/{inspection}', [InspectionController::class, 'update'])
         ->name('inspections.update');
-    Route::resource('test-devices', \App\Http\Controllers\TestDeviceController::class)->except(['show']);    
+    Route::resource('test-devices', \App\Http\Controllers\TestDeviceController::class);    
 });
 
 // Laravel Standard Auth-Routen (Login, Logout, Passwort, etc.)
