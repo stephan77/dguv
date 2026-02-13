@@ -27,9 +27,10 @@
 
         <!-- SIDEBAR -->
 <aside
-    class="fixed inset-y-0 left-0 z-50 bg-slate-900 text-white transition-all duration-300 lg:static lg:translate-x-0"
+    class="fixed inset-y-0 left-0 z-50 bg-slate-900 text-white transition-transform duration-300
+           w-64 lg:static"
     :class="sidebarOpen 
-        ? 'translate-x-0 w-64' 
+        ? 'translate-x-0 lg:w-64' 
         : '-translate-x-full lg:translate-x-0 lg:w-20'"
 >
             <!-- HEADER -->
