@@ -1,28 +1,66 @@
-<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6" id="media-section"
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"
+     id="media-section"
      data-root-id="{{ $mediaRootId }}"
      data-media-base="{{ $mediaBasePath }}"
      data-upload-button-id="{{ $uploadButtonId }}">
+
+    <!-- HEADER + PFEILE -->
     <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold">Medien</h3>
+
+        <div class="flex items-center gap-4">
+            <h3 class="text-lg font-semibold">Medien</h3>
+
+            <div id="media-nav" class="flex gap-2">
+                <button id="media-prev"
+                    class="bg-slate-800 text-white w-9 h-9 rounded-full flex items-center justify-center">
+                    ‹
+                </button>
+
+                <button id="media-next"
+                    class="bg-slate-800 text-white w-9 h-9 rounded-full flex items-center justify-center">
+                    ›
+                </button>
+            </div>
+        </div>
+
         <div class="text-xs text-slate-500">Bilder und Videos</div>
     </div>
 
-    <div id="media-empty" class="text-sm text-slate-500 {{ collect($mediaItems)->count() > 0 ? 'hidden' : '' }}">
+    <!-- KEINE MEDIEN -->
+    <div id="media-empty"
+         class="text-sm text-slate-500 {{ collect($mediaItems)->count() > 0 ? 'hidden' : '' }}">
         Noch keine Medien vorhanden.
     </div>
 
-    <div id="media-slider" class="relative {{ collect($mediaItems)->count() === 0 ? 'hidden' : '' }}">
-        <button type="button" id="media-prev" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/60 text-white w-11 h-11 touch-target">‹</button>
-        <button type="button" id="media-next" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 rounded-full bg-black/60 text-white w-11 h-11 touch-target">›</button>
+    <!-- SLIDER -->
+    <div id="media-slider"
+         class="{{ collect($mediaItems)->count() === 0 ? 'hidden' : '' }}">
 
-        <div class="rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
-            <div id="media-stage" class="aspect-video w-full flex items-center justify-center"></div>
+        <div class="rounded-2xl border border-slate-200 bg-slate-100 overflow-hidden">
+
+            <div id="media-stage"
+                 class="w-full h-[420px] flex items-center justify-center">
+            </div>
+
         </div>
+
         <div id="media-meta" class="mt-3 text-sm text-slate-600"></div>
-        <div class="mt-3 flex gap-2 media-mobile-actions">
-            <button id="set-primary" type="button" class="px-3 py-2 text-xs rounded-lg border border-slate-300 hover:bg-slate-50 touch-target">Als Hauptbild setzen</button>
-            <button id="delete-media" type="button" class="px-3 py-2 text-xs rounded-lg bg-red-600 text-white hover:bg-red-700 touch-target">Löschen</button>
-            <button id="open-fullscreen" type="button" class="px-3 py-2 text-xs rounded-lg bg-slate-900 text-white hover:bg-slate-800 touch-target">Vollbild</button>
+
+        <div class="mt-3 flex gap-2">
+            <button id="set-primary"
+                class="px-3 py-2 text-xs rounded-lg border border-slate-300">
+                Als Hauptbild setzen
+            </button>
+
+            <button id="delete-media"
+                class="px-3 py-2 text-xs rounded-lg bg-red-600 text-white">
+                Löschen
+            </button>
+
+            <button id="open-fullscreen"
+                class="px-3 py-2 text-xs rounded-lg bg-slate-900 text-white">
+                Vollbild
+            </button>
         </div>
     </div>
 </div>
@@ -113,7 +151,10 @@
                 if (xhr.status >= 200 && xhr.status < 300) {
                     const created = xhr.response?.data ?? [];
                     mediaState.items = [...created, ...mediaState.items];
+                    mediaState.index = 0; // immer erstes (neues) Bild anzeigen
                     renderMedia();
+
+
                     row.querySelector('.progress-label').textContent = 'Fertig';
                 } else {
                     row.querySelector('.progress-label').textContent = 'Fehlgeschlagen';
