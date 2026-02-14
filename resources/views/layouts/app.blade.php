@@ -30,8 +30,8 @@
 <aside
     x-show="sidebarOpen || window.matchMedia('(min-width: 1024px)').matches"
     x-transition
-    class="fixed inset-y-0 left-0 z-50 bg-slate-900 text-white
-           w-64 lg:static"
+    class="fixed inset-y-0 left-0 z-50 bg-slate-900 text-white lg:static transition-all duration-300"
+    :class="sidebarOpen ? 'w-64' : 'w-20'"
 >
             <!-- HEADER -->
             <div class="flex items-center justify-between px-6 py-6">
@@ -129,7 +129,7 @@
 
     <!-- CONTENT -->
     <div class="flex-1 transition-all duration-300"
-         :class="sidebarOpen ? 'lg:pl-64' : 'lg:pl-20'">
+         :class="sidebarOpen ? 'lg:ml-64' : 'lg:ml-20'">
 
         <header class="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white/80 px-6 py-4 backdrop-blur">
             <div>
